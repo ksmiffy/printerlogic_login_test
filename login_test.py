@@ -59,11 +59,15 @@ res.write("Variation 5: password with non-space leading characters ")
 allowed = login_test(valid_admin_user, "1" + valid_admin_pass)
 is_allowed(allowed, res)
 
-res.write("Variation 6: backwards password ")
+res.write("Variation 6: password with trailing space, then password repeated ")
+allowed = login_test(valid_admin_user, valid_admin_pass + " " + valid_admin_pass)
+is_allowed(allowed, res)
+
+res.write("Variation 7: backwards password ")
 allowed = login_test(valid_admin_user, "ssapts3t")
 is_allowed(allowed, res)
 
-res.write("Variation 7: admin/admin ")
+res.write("Variation 8: admin/admin ")
 allowed = login_test("admin", "admin")
 is_allowed(allowed, res)
 
@@ -82,6 +86,15 @@ res.write("Variation 3: unrelated username with admin password ")
 allowed = login_test("administrator", valid_admin_pass)
 is_allowed(allowed, res)
 
+res.write("Variation 4: username with leading spaces ")
+allowed = login_test("   " + valid_admin_user, valid_admin_pass)
+is_allowed(allowed, res)
+
+res.write("Variation 5: username with trailing spaces ")
+allowed = login_test(valid_admin_user + "    ", valid_admin_pass)
+is_allowed(allowed, res)
+
+# Test 4: lost password link
 res.write("\nTest 4: Lost password link ")
 driver.find_element_by_id("forgot-password").click()
 time.sleep(2)
